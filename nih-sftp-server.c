@@ -41,7 +41,8 @@ realpath() is broken and sftp_realpath will return unsupported
 _BSD_SOURCE for futimes; otherwise sftp_fsetstat() will return unsupported
 */
 #define _XOPEN_SOURCE 700
-#define _BSD_SOURCE
+//#define _BSD_SOURCE
+#define _DARWIN_C_SOURCE
 /* GCC folks may prefer to #define _DEFAULT_SOURCE but this is not obviously POSIX compliant */
 
 /* C library */
@@ -249,8 +250,8 @@ static buff_t ibuff, obuff;
 static ssh_bool_t have_init = SSH_FALSE;
 static fxp_handle_t handles[MAX_HANDLES];
 
-#if defined(DBMULTI_sftp_server) || !DROPBEAR_MULTI
-#if defined(DBMULTI_sftp_server) && DROPBEAR_MULTI
+#if defined(DBMULTI_sftp) || !DROPBEAR_MULTI
+#if defined(DBMULTI_sftp) && DROPBEAR_MULTI
 int sftp_server_main(int argc, char **argv)
 #else
 int
@@ -328,6 +329,7 @@ main(int argc, char **argv)
         }
     }
 }
+#endif /* DBMULTI_sftp_server stuff */
 
 static void read_input(uint32_t len)
 {

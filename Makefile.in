@@ -2,14 +2,22 @@
 # @configure_input@
 
 # invocation:
-# make PROGRAMS="dropbear dbclient scp sftp-server" MULTI=1 SCPPROGRESS=1
+# make PROGRAMS="dropbear dbclient scp sftp" MULTI=1 SCPPROGRESS=1
 #
 # to make a multiple-program binary "dropbearmulti".
-# This example will include dropbear, scp, sftp-server, dropbearkey, dropbearconvert, and
+# This example will include dropbear, scp, sftp, dropbearkey, dropbearconvert, and
 # dbclient functionality, and includes the progress-bar functionality in scp.
 
 ifndef PROGRAMS
-	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert
+	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert scp sftp
+endif
+
+ifndef MULTI
+	MULTI=1
+endif
+
+ifndef SCPROGRESS
+	SCPROGRESS=1
 endif
 
 STATIC_LTC=libtomcrypt/libtomcrypt.a
@@ -60,7 +68,7 @@ CONVERTOBJS=dropbearconvert.o keyimport.o
 
 SCPOBJS=scp.o progressmeter.o atomicio.o scpmisc.o compat.o
 
-SFTPSERVEROBJS=nih-sftp-server.o
+SFTPOBJS=nih-sftp-server.o
 
 ifeq (@DROPBEAR_FUZZ@, 1)
 	allobjs = $(COMMONOBJS) fuzz-common.o  fuzz-wrapfd.o $(CLISVROBJS) $(CLIOBJS) $(SVROBJS) @CRYPTLIB@
@@ -80,7 +88,7 @@ else
 	dropbearkeyobjs=$(COMMONOBJS) $(KEYOBJS)
 	dropbearconvertobjs=$(COMMONOBJS) $(CONVERTOBJS)
 	scpobjs=$(SCPOBJS)
-	sftpserverobjs=$(SFTPSERVEROBJS)
+	sftpobjs=$(SFTPOBJS)
 endif
 
 VPATH=@srcdir@
@@ -205,8 +213,8 @@ scp: $(SCPOBJS)  $(HEADERS) Makefile
 	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $(SCPOBJS)
 
 # scp doesn't use the libs or header so is special.
-sftp-server: $(SFTPSERVEROBJS) Makefile
-	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $(SFTPSERVEROBJS)
+sftp: $(SFTPOBJS) Makefile
+	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $(SFTPOBJS)
 
 # multi-binary compilation.
 MULTIOBJS=
@@ -247,7 +255,7 @@ clean: $(LIBTOM_CLEAN) thisclean
 
 thisclean:
 	-rm -f dropbear$(EXEEXT) dbclient$(EXEEXT) dropbearkey$(EXEEXT) \
-			dropbearconvert$(EXEEXT) scp$(EXEEXT) sftp-server$(EXEEXT) scp-progress$(EXEEXT) \
+			dropbearconvert$(EXEEXT) scp$(EXEEXT) sftp$(EXEEXT) scp-progress$(EXEEXT) \
 			dropbearmulti$(EXEEXT) *.o *.da *.bb *.bbg *.prof
 
 distclean: clean tidy

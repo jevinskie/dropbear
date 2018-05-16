@@ -61,9 +61,10 @@ static int runprog(const char *progname, int argc, char ** argv, int *match) {
 			return scp_main(argc, argv);
 		}
 #endif
-#ifdef DBMULTI_sftp_server
-		if (strcmp(progname, "sftp-server") == 0) {
-			return sftp_main(argc, argv);
+#ifdef DBMULTI_sftp
+		if (strcmp(progname, "sftp-server") == 0 ||
+				strcmp(progname, "sftp") == 0) {
+			return sftp_server_main(argc, argv);
 		}
 #endif
 	*match = DROPBEAR_FAILURE;
@@ -103,7 +104,7 @@ int main(int argc, char ** argv) {
 #ifdef DBMULTI_scp
 			"'scp' - secure copy\n"
 #endif
-#ifdef DBMULTI_sftp_server
+#ifdef DBMULTI_sftp
 			"'sftp-server' - sftp server (NIH)\n"
 #endif
 			,
