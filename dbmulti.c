@@ -23,6 +23,7 @@
  * SOFTWARE. */
 
 #include "includes.h"
+#include "runopts.h"
 
 /* definitions are cleanest if we just put them here */
 int dropbear_main(int argc, char ** argv);
@@ -74,6 +75,7 @@ static int runprog(const char *progname, int argc, char ** argv, int *match) {
 int main(int argc, char ** argv) {
 	int i;
 	for (i = 0; i < 2; i++) {
+		i == 0 ? opts.dropbearmulti_path = argv[i] : NULL;
 		/* Try symlink first, then try as an argument eg "dropbearmulti dbclient host ..." */
 		if (argc > i) {
 			int match, res;

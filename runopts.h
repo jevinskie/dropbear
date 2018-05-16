@@ -58,6 +58,10 @@ typedef struct runopts {
 	char *mac_list;
 #endif
 
+#if DROPBEAR_MULTI
+	char *dropbearmulti_path;
+#endif
+
 } runopts;
 
 extern runopts opts;
