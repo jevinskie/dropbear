@@ -671,7 +671,7 @@ static int sessioncommand(struct Channel *channel, struct ChanSess *chansess,
 #else
 				size_t sftp_cmd_len = strlen(opts.dropbearmulti_path) + strlen("' sftp'") + 1;
 				chansess->cmd = m_malloc(sftp_cmd_len);
-				snprintf(chansess->cmd, sftp_cmd_len, "'%s %s'", opts.dropbearmulti_path, "sftp");
+				snprintf(chansess->cmd, sftp_cmd_len, "%s %s", opts.dropbearmulti_path, "sftp");
 #endif
 			} else 
 #endif
