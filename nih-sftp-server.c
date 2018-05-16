@@ -329,7 +329,7 @@ main(int argc, char **argv)
         }
     }
 }
-#endif /* DBMULTI_sftp_server stuff */
+#endif /* DBMULTI_sftp stuff */
 
 static void read_input(uint32_t len)
 {
