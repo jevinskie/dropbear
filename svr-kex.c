@@ -120,7 +120,7 @@ static void svr_ensure_hostkey() {
 		case DROPBEAR_SIGNKEY_ECDSA_NISTP256:
 		case DROPBEAR_SIGNKEY_ECDSA_NISTP384:
 		case DROPBEAR_SIGNKEY_ECDSA_NISTP521:
-			fn = ECDSA_PRIV_FILENAME;
+			fn = arg_opts.ecdsa_priv_host_key_path;
 			break;
 #endif
 		default:

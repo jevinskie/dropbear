@@ -105,16 +105,19 @@ static void printhelp(const char * progname) {
 #endif
 					,DROPBEAR_VERSION, progname,
 #if DROPBEAR_DSS
-					DSS_PRIV_FILENAME,
+					arg_opts.dss_priv_host_key_path,
 #endif
 #if DROPBEAR_RSA
-					RSA_PRIV_FILENAME,
+					arg_opts.rsa_priv_host_key_path,
 #endif
 #if DROPBEAR_ECDSA
-					ECDSA_PRIV_FILENAME,
+					arg_opts.ecdsa_priv_host_key_path,
 #endif
 					MAX_AUTH_TRIES,
-					DROPBEAR_MAX_PORTS, DROPBEAR_DEFPORT, DROPBEAR_PIDFILE,
+					DROPBEAR_MAX_PORTS, DROPBEAR_DEFPORT,
+
+					arg_opts.pid_path,
+
 					DEFAULT_RECV_WINDOW, DEFAULT_KEEPALIVE, DEFAULT_IDLE_TIMEOUT);
 }
 
@@ -149,7 +152,7 @@ void svr_getopts(int argc, char ** argv) {
 	svr_opts.portcount = 0;
 	svr_opts.hostkey = NULL;
 	svr_opts.delay_hostkey = 0;
-	svr_opts.pidfile = DROPBEAR_PIDFILE;
+	svr_opts.pidfile = arg_opts.pid_path;
 #if DROPBEAR_SVR_LOCALTCPFWD
 	svr_opts.nolocaltcp = 0;
 #endif
@@ -542,15 +545,15 @@ void load_all_hostkeys() {
 	/* Only load default host keys if a host key is not specified by the user */
 	if (svr_opts.num_hostkey_files == 0) {
 #if DROPBEAR_RSA
-		loadhostkey(RSA_PRIV_FILENAME, 0);
+		loadhostkey(arg_opts.rsa_priv_host_key_path, 0);
 #endif
 
 #if DROPBEAR_DSS
-		loadhostkey(DSS_PRIV_FILENAME, 0);
+		loadhostkey(arg_opts.dss_priv_host_key_path, 0);
 #endif
 
 #if DROPBEAR_ECDSA
-		loadhostkey(ECDSA_PRIV_FILENAME, 0);
+		loadhostkey(arg_opts.ecdsa_priv_host_key_path, 0);
 #endif
 	}
 
