@@ -250,7 +250,8 @@ Homedir is prepended unless path begins with / */
  * OpenSSH), set the path below and set DROPBEAR_SFTPSERVER. 
  * The sftp-server program is not provided by Dropbear itself */
 #define DROPBEAR_SFTPSERVER 1
-#define SFTPSERVER_PATH "./sftp"
+//#define SFTPSERVER_PATH "/usr/lib/sftp-server"
+#define SFTPSERVER_PATH "/home/jevin/code/auto/crv/ssh/nih-sftp-server/nih-sftp-server"
 
 /* This is used by the scp binary when used as a client binary. If you're
  * not using the Dropbear client, you'll need to change it */
