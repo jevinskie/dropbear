@@ -142,6 +142,8 @@ int main(int argc, char ** argv) {
 	unsigned int bits = 0, genbits;
 	int printpub = 0;
 
+	slurp_args(argc, argv);
+
 	crypto_init();
 	seedrandom();
 
