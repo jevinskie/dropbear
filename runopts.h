@@ -31,6 +31,8 @@
 #include "auth.h"
 #include "tcpfwd.h"
 
+#include "argopts.h"
+
 typedef struct runopts {
 
 #if DROPBEAR_SVR_REMOTETCPFWD || DROPBEAR_CLI_LOCALTCPFWD \
@@ -124,6 +126,18 @@ typedef struct svr_runopts {
 	char * pidfile;
 
 	char * forced_command;
+
+#if DROPBEAR_DSS
+	char * dss_priv_host_key_file;
+#endif
+
+#if DROPBEAR_RSA
+	char * rsa_priv_host_key_file;
+#endif
+
+#if DROPBEAR_ECDSA
+	char * ecdsa_priv_host_key_file;
+#endif
 
 } svr_runopts;
 

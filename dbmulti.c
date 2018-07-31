@@ -24,14 +24,16 @@
 
 #include "includes.h"
 
-/* definitions are cleanest if we just put them here */
-int dropbear_main(int argc, char ** argv);
-int cli_main(int argc, char ** argv);
-int dropbearkey_main(int argc, char ** argv);
-int dropbearconvert_main(int argc, char ** argv);
-int scp_main(int argc, char ** argv);
+#include "argopts.h"
 
-static int runprog(const char *progname, int argc, char ** argv, int *match) {
+/* definitions are cleanest if we just put them here */
+int dropbear_main(int argc, const char ** argv);
+int cli_main(int argc, const char ** argv);
+int dropbearkey_main(int argc, const char ** argv);
+int dropbearconvert_main(int argc, const char ** argv);
+int scp_main(int argc, const char ** argv);
+
+static int runprog(const char *progname, int argc, const char ** argv, int *match) {
 	*match = DROPBEAR_SUCCESS;
 
 #ifdef DBMULTI_dropbear
@@ -64,8 +66,11 @@ static int runprog(const char *progname, int argc, char ** argv, int *match) {
 	return 1;
 }
 
-int main(int argc, char ** argv) {
+int main(int argc, const char ** argv) {
 	int i;
+
+	slurp_args(argc, argv);
+
 	for (i = 0; i < 2; i++) {
 		/* Try symlink first, then try as an argument eg "dropbearmulti dbclient host ..." */
 		if (argc > i) {

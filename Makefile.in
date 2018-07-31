@@ -20,6 +20,12 @@ ifndef SCPPROGRESS
 	SCPPROGRESS=1
 endif
 
+ifeq ($(MULTI), 1)
+ifndef MULTIRELFILES
+	MULTIRELFILES=1
+endif
+endif
+
 STATIC_LTC=libtomcrypt/libtomcrypt.a
 STATIC_LTM=libtommath/libtommath.a
 
@@ -56,6 +62,10 @@ COMMONOBJS=dbutil.o buffer.o dbhelpers.o \
 		ltc_prng.o ecc.o ecdsa.o crypto_desc.o \
 		dbmalloc.o \
 		gensignkey.o gendss.o genrsa.o
+
+ifeq ($(MULTIRELFILES), 1)
+COMMONOBJS += argopts.o
+endif
 
 SVROBJS=svr-kex.o svr-auth.o sshpty.o \
 		svr-authpasswd.o svr-authpubkey.o svr-authpubkeyoptions.o svr-session.o svr-service.o \

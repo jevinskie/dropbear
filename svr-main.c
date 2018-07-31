@@ -55,6 +55,8 @@ int main(int argc, char ** argv)
 
 	disallow_core();
 
+	slurp_args(argc, argv);
+
 	/* get commandline options */
 	svr_getopts(argc, argv);
 

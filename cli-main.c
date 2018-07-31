@@ -42,9 +42,9 @@ static void kill_proxy_sighandler(int signo);
 
 #if defined(DBMULTI_dbclient) || !DROPBEAR_MULTI
 #if defined(DBMULTI_dbclient) && DROPBEAR_MULTI
-int cli_main(int argc, char ** argv) {
+int cli_main(int argc, const char ** argv) {
 #else
-int main(int argc, char ** argv) {
+int main(int argc, const char ** argv) {
 #endif
 
 	int sock_in, sock_out;
@@ -54,6 +54,8 @@ int main(int argc, char ** argv) {
 	_dropbear_log = cli_dropbear_log;
 
 	disallow_core();
+
+	slurp_args(argc, argv);
 
 	seedrandom();
 	crypto_init();
