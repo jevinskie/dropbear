@@ -13,7 +13,7 @@ Options can also be defined with -DDROPBEAR_XXX=[0,1] in Makefile CFLAGS
 
 IMPORTANT: Some options will require "make clean" after changes */
 
-#define DROPBEAR_DEFPORT "2222"
+#define DROPBEAR_DEFPORT "22"
 
 /* Listen on all interfaces */
 #define DROPBEAR_DEFADDRESS ""
@@ -41,13 +41,13 @@ IMPORTANT: Some options will require "make clean" after changes */
 
 /* Include verbose debug output, enabled with -v at runtime. 
  * This will add a reasonable amount to your executable size. */
-#define DEBUG_TRACE 1
+#define DEBUG_TRACE 0
 
 /* Set this if you want to use the DROPBEAR_SMALL_CODE option. This can save
  * several kB in binary size however will make the symmetrical ciphers and hashes
  * slower, perhaps by 50%. Recommended for small systems that aren't doing
  * much traffic. */
-#define DROPBEAR_SMALL_CODE 0
+#define DROPBEAR_SMALL_CODE 1
 
 /* Enable X11 Forwarding - server only */
 #define DROPBEAR_X11FWD 1
@@ -85,7 +85,7 @@ IMPORTANT: Some options will require "make clean" after changes */
  * Including both AES keysize variants (128 and 256) will result in 
  * a minimal size increase */
 #define DROPBEAR_AES128 1
-#define DROPBEAR_3DES 0
+#define DROPBEAR_3DES 1
 #define DROPBEAR_AES256 1
 #define DROPBEAR_TWOFISH256 0
 #define DROPBEAR_TWOFISH128 0
@@ -262,7 +262,7 @@ Homedir is prepended unless path begins with / */
 /* Whether to log commands executed by a client. This only logs the 
  * (single) command sent to the server, not what a user did in a 
  * shell/sftp session etc. */
-#define LOG_COMMANDS 1
+#define LOG_COMMANDS 0
 
 /* Window size limits. These tend to be a trade-off between memory
    usage and network performance: */
