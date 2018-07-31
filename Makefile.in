@@ -9,7 +9,15 @@
 # dbclient functionality, and includes the progress-bar functionality in scp.
 
 ifndef PROGRAMS
-	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert
+	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert scp
+endif
+
+ifndef MULTI
+	MULTI=1
+endif
+
+ifndef SCPPROGRESS
+	SCPPROGRESS=1
 endif
 
 STATIC_LTC=libtomcrypt/libtomcrypt.a
