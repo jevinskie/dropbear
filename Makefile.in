@@ -25,9 +25,19 @@ LIBTOM_LIBS=$(STATIC_LTC) $(STATIC_LTM)
 endif
 
 OPTION_HEADERS = default_options_guard.h sysoptions.h
+
+# look for localoptions.h in the build directory
 ifneq ($(wildcard localoptions.h),)
 CFLAGS+=-DLOCALOPTIONS_H_EXISTS
 OPTION_HEADERS += localoptions.h
+endif
+
+srcdir=@srcdir@
+
+# also look for localoptions.h in the source directory
+ifneq ($(wildcard $(srcdir)/localoptions.h),)
+CFLAGS+=-DLOCALOPTIONS_H_EXISTS
+OPTION_HEADERS += $(srcdir)/localoptions.h
 endif
 
 COMMONOBJS=dbutil.o buffer.o dbhelpers.o \
@@ -81,7 +91,6 @@ else
 endif
 
 VPATH=@srcdir@
-srcdir=@srcdir@
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
