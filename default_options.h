@@ -242,7 +242,8 @@ Homedir is prepended unless path begins with / */
 
 /* The default file to store the daemon's process ID, for shutdown
    scripts etc. This can be overridden with the -P flag */
-#define DROPBEAR_PIDFILE "/var/run/dropbear.pid"
+#define DROPBEAR_PIDFILE_BASE "dropbear.pid"
+#define DROPBEAR_PIDFILE "/var/run/" DROPBEAR_PIDFILE_BASE
 
 /* The command to invoke for xauth when using X11 forwarding.
  * "-q" for quiet */
