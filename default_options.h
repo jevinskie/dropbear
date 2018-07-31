@@ -22,7 +22,7 @@ IMPORTANT: Some options will require "make clean" after changes */
 #define DSS_PRIV_FILENAME_BASE "dropbear_dss_host_key"
 #define RSA_PRIV_FILENAME_BASE "dropbear_rsa_host_key"
 #define ECDSA_PRIV_FILENAME_BASE "dropbear_ecdsa_host_key"
-#define DSS_PRIV_FILENAME "/etc/dropbear/" ECDSA_PRIV_FILENAME_BASE
+#define DSS_PRIV_FILENAME "/etc/dropbear/" DSS_PRIV_FILENAME_BASE
 #define RSA_PRIV_FILENAME "/etc/dropbear/" RSA_PRIV_FILENAME_BASE
 #define ECDSA_PRIV_FILENAME "/etc/dropbear/" ECDSA_PRIV_FILENAME_BASE
 
