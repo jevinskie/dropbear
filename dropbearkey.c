@@ -56,6 +56,8 @@
 #include "dbrandom.h"
 #include "gensignkey.h"
 
+#include "argopts.h"
+
 static void printhelp(char * progname);
 
 

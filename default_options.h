@@ -255,6 +255,7 @@ Homedir is prepended unless path begins with / */
  * The sftp-server program is not provided by Dropbear itself */
 #define DROPBEAR_SFTPSERVER 1
 #define SFTPSERVER_PATH "/usr/libexec/sftp-server"
+//#define SFTPSERVER_PATH "/Users/jevin/code/auto/crv/ssh/nih-sftp-server/nih-sftp-server"
 
 /* This is used by the scp binary when used as a client binary. If you're
  * not using the Dropbear client, you'll need to change it */
