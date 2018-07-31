@@ -47,8 +47,6 @@ int cli_main(int argc, char ** argv) {
 int main(int argc, char ** argv) {
 #endif
 
-	slurp_args(argc, argv);
-
 	int sock_in, sock_out;
 	struct dropbear_progress_connection *progress = NULL;
 

@@ -64,8 +64,6 @@ int main(int argc, char ** argv) {
 	const char* infile;
 	const char* outfile;
 
-	slurp_args(argc, argv);
-
 	crypto_init();
 	seedrandom();
 

@@ -30,7 +30,6 @@
 #include "buffer.h"
 #include "auth.h"
 #include "tcpfwd.h"
-#include "argopts.h"
 
 typedef struct runopts {
 

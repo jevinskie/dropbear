@@ -318,8 +318,6 @@ main(int argc, char **argv)
 	extern char *optarg;
 	extern int optind;
 
-	slurp_args(argc, argv);
-
 	/* Ensure that fds 0, 1 and 2 are open or directed to /dev/null */
 	sanitise_stdfd();
 

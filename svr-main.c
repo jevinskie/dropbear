@@ -53,8 +53,6 @@ int main(int argc, char ** argv)
 	_dropbear_exit = svr_dropbear_exit;
 	_dropbear_log = svr_dropbear_log;
 
-	slurp_args(argc, argv);
-
 	disallow_core();
 
 	/* get commandline options */

@@ -66,9 +66,6 @@ static int runprog(const char *progname, int argc, char ** argv, int *match) {
 
 int main(int argc, char ** argv) {
 	int i;
-
-	slurp_args(argc, argv);
-
 	for (i = 0; i < 2; i++) {
 		/* Try symlink first, then try as an argument eg "dropbearmulti dbclient host ..." */
 		if (argc > i) {
