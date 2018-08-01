@@ -22,7 +22,7 @@ void dump_arg_opts(void) {
 }
 #endif
 
-void slurp_args(int argc, const char **argv) {
+void slurp_args(int argc, char **argv) {
 
 #if DEBUG_TRACE
     for (int i = 0; i < argc; i++) {

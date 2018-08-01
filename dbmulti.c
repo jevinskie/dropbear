@@ -27,13 +27,13 @@
 #include "argopts.h"
 
 /* definitions are cleanest if we just put them here */
-int dropbear_main(int argc, const char ** argv);
-int cli_main(int argc, const char ** argv);
-int dropbearkey_main(int argc, const char ** argv);
-int dropbearconvert_main(int argc, const char ** argv);
-int scp_main(int argc, const char ** argv);
+int dropbear_main(int argc, char ** argv);
+int cli_main(int argc, char ** argv);
+int dropbearkey_main(int argc, char ** argv);
+int dropbearconvert_main(int argc, char ** argv);
+int scp_main(int argc, char ** argv);
 
-static int runprog(const char *progname, int argc, const char ** argv, int *match) {
+static int runprog(const char *progname, int argc, char ** argv, int *match) {
 	*match = DROPBEAR_SUCCESS;
 
 #ifdef DBMULTI_dropbear
@@ -66,7 +66,7 @@ static int runprog(const char *progname, int argc, const char ** argv, int *matc
 	return 1;
 }
 
-int main(int argc, const char ** argv) {
+int main(int argc, char ** argv) {
 	int i;
 
 	slurp_args(argc, argv);

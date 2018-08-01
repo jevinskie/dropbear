@@ -29,8 +29,9 @@
 #include "dbutil.h"
 #include "keyimport.h"
 #include "crypto_desc.h" 
-#include "dbrandom.h" 
+#include "dbrandom.h"
 
+#include "argopts.h"
 
 static int do_convert(int intype, const char* infile, int outtype,
 		const char* outfile);

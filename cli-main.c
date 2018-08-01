@@ -32,6 +32,8 @@
 #include "crypto_desc.h"
 #include "netio.h"
 
+#include "argopts.h"
+
 static void cli_dropbear_exit(int exitcode, const char* format, va_list param) ATTRIB_NORETURN;
 static void cli_dropbear_log(int priority, const char* format, va_list param);
 
@@ -42,9 +44,9 @@ static void kill_proxy_sighandler(int signo);
 
 #if defined(DBMULTI_dbclient) || !DROPBEAR_MULTI
 #if defined(DBMULTI_dbclient) && DROPBEAR_MULTI
-int cli_main(int argc, const char ** argv) {
+int cli_main(int argc, char ** argv) {
 #else
-int main(int argc, const char ** argv) {
+int main(int argc, char ** argv) {
 #endif
 
 	int sock_in, sock_out;

@@ -81,6 +81,8 @@
 #include "scpmisc.h"
 #include "progressmeter.h"
 
+#include "argopts.h"
+
 void bwlimit(int);
 
 /* Struct for addargs */

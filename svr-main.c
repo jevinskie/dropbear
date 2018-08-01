@@ -31,6 +31,8 @@
 #include "dbrandom.h"
 #include "crypto_desc.h"
 
+#include "argopts.h"
+
 static size_t listensockets(int *sock, size_t sockcount, int *maxfd);
 static void sigchld_handler(int dummy);
 static void sigsegv_handler(int);

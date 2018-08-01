@@ -16,6 +16,6 @@ typedef struct argopts {
 
 extern argopts arg_opts;
 
-void slurp_args(int argc, const char **argv);
+void slurp_args(int argc, char **argv);
 
 #endif /* DROPBEAR_ARGOPTS_H_ */
