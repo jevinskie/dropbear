@@ -22,6 +22,7 @@ endif
 
 ifndef RELFILES
 	RELFILES=1
+	NO_MAN=1
 endif
 
 STATIC_LTC=libtomcrypt/libtomcrypt.a
@@ -119,6 +120,14 @@ bindir=@bindir@
 sbindir=@sbindir@
 mandir=@mandir@
 
+ifeq ($(RELFILES), 1)
+exec_prefix=$(prefix)
+datarootdir=$(prefix)
+bindir=$(prefix)
+sbindir=$(prefix)
+mandir=$(prefix)
+endif
+
 .DELETE_ON_ERROR:
 
 CC=@CC@
@@ -186,28 +195,36 @@ insmultidropbear: dropbearmulti$(EXEEXT)
 	$(INSTALL) -d $(DESTDIR)$(sbindir)
 	-rm -f $(DESTDIR)$(sbindir)/dropbear$(EXEEXT)
 	-ln -s $(bindir)/dropbearmulti$(EXEEXT) $(DESTDIR)$(sbindir)/dropbear$(EXEEXT) 
+ifneq ($(NO_MAN), 1)
 	$(INSTALL) -d $(DESTDIR)$(mandir)/man8
 	$(INSTALL) -m 644 $(srcdir)/dropbear.8  $(DESTDIR)$(mandir)/man8/dropbear.8
+endif
 
 insmulti%: dropbearmulti$(EXEEXT)
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	-rm -f $(DESTDIR)$(bindir)/$*$(EXEEXT) 
 	-ln -s $(bindir)/dropbearmulti$(EXEEXT) $(DESTDIR)$(bindir)/$*$(EXEEXT) 
+ifneq ($(NO_MAN), 1)
 	$(INSTALL) -d $(DESTDIR)$(mandir)/man1
 	if test -e $*.1; then $(INSTALL) -m 644 $*.1 $(DESTDIR)$(mandir)/man1/$*.1; fi
+endif
 
 # dropbear should go in sbin, so it needs a separate rule
 inst_dropbear: dropbear
 	$(INSTALL) -d $(DESTDIR)$(sbindir)
 	$(INSTALL) dropbear$(EXEEXT) $(DESTDIR)$(sbindir)
+ifneq ($(NO_MAN), 1)
 	$(INSTALL) -d $(DESTDIR)$(mandir)/man8
 	$(INSTALL) -m 644 $(srcdir)/dropbear.8 $(DESTDIR)$(mandir)/man8/dropbear.8
+endif
 
 inst_%: %
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) $*$(EXEEXT) $(DESTDIR)$(bindir)
+ifneq ($(NO_MAN), 1)
 	$(INSTALL) -d $(DESTDIR)$(mandir)/man1
 	if test -e $*.1; then $(INSTALL) -m 644 $*.1 $(DESTDIR)$(mandir)/man1/$*.1; fi
+endif
 
 inst_dropbearmulti: $(addprefix insmulti, $(PROGRAMS)) 
 
