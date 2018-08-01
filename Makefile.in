@@ -20,10 +20,8 @@ ifndef SCPPROGRESS
 	SCPPROGRESS=1
 endif
 
-ifeq ($(MULTI), 1)
-ifndef MULTIRELFILES
-	MULTIRELFILES=1
-endif
+ifndef RELFILES
+	RELFILES=1
 endif
 
 STATIC_LTC=libtomcrypt/libtomcrypt.a
@@ -63,7 +61,7 @@ COMMONOBJS=dbutil.o buffer.o dbhelpers.o \
 		dbmalloc.o \
 		gensignkey.o gendss.o genrsa.o
 
-ifeq ($(MULTIRELFILES), 1)
+ifeq ($(RELFILES), 1)
 COMMONOBJS += argopts.o
 endif
 
@@ -87,6 +85,10 @@ KEYOBJS=dropbearkey.o
 CONVERTOBJS=dropbearconvert.o keyimport.o
 
 SCPOBJS=scp.o progressmeter.o atomicio.o scpmisc.o compat.o
+
+ifeq ($(RELFILES), 1)
+SCPOBJS += argopts.o
+endif
 
 ifeq (@DROPBEAR_FUZZ@, 1)
 	allobjs = $(COMMONOBJS) fuzz-common.o  fuzz-wrapfd.o $(CLISVROBJS) $(CLIOBJS) $(SVROBJS) @CRYPTLIB@

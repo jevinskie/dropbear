@@ -5,35 +5,26 @@
 
 #include "argopts.h"
 #include "options.h"
-#include "dbutil.h"
 
 argopts arg_opts;
 
 #if DEBUG_TRACE
 void dump_arg_opts(void) {
-    TRACE(("\targ_opts->argv0: '%s'", arg_opts.argv0))
-    TRACE(("\targ_opts->argv1: '%s'", arg_opts.argv1))
-    TRACE(("\targ_opts->bin_path: '%s'", arg_opts.bin_path))
-    TRACE(("\targ_opts->bin_dir: '%s'", arg_opts.bin_dir))
-    TRACE(("\targ_opts->pid_path: '%s'", arg_opts.pid_path))
-    TRACE(("\targ_opts->dss_priv_host_key_path: '%s'", arg_opts.dss_priv_host_key_path))
-    TRACE(("\targ_opts->rsa_priv_host_key_path: '%s'", arg_opts.rsa_priv_host_key_path))
-    TRACE(("\targ_opts->ecdsa_priv_host_key_path: '%s'", arg_opts.ecdsa_priv_host_key_path))
+    fprintf(stderr, "\targ_opts->argv0: '%s'\n", arg_opts.argv0);
+    fprintf(stderr, "\targ_opts->argv1: '%s'\n", arg_opts.argv1);
+    fprintf(stderr, "\targ_opts->bin_path: '%s'\n", arg_opts.bin_path);
+    fprintf(stderr, "\targ_opts->bin_dir: '%s'\n", arg_opts.bin_dir);
+    fprintf(stderr, "\targ_opts->pid_path: '%s'\n", arg_opts.pid_path);
+    fprintf(stderr, "\targ_opts->dss_priv_host_key_path: '%s'\n", arg_opts.dss_priv_host_key_path);
+    fprintf(stderr, "\targ_opts->rsa_priv_host_key_path: '%s'\n", arg_opts.rsa_priv_host_key_path);
+    fprintf(stderr, "\targ_opts->ecdsa_priv_host_key_path: '%s'\n", arg_opts.ecdsa_priv_host_key_path);
 }
 #endif
 
 void slurp_args(int argc, char **argv) {
 
 #if DEBUG_TRACE
-    for (int i = 0; i < argc; i++) {
-        if (strlen(argv[i]) == 2 && argv[i][0] == '-' && argv[i][1] == 'v') {
-            debug_trace = 1;
-        }
-    }
-#endif
-
-#if DEBUG_TRACE
-    TRACE(("arg_opts before slurp_args():"));
+    fprintf(stderr, "arg_opts before slurp_args():\n");
     dump_arg_opts();
 #endif
 
@@ -54,7 +45,7 @@ void slurp_args(int argc, char **argv) {
     }
 
 #if DEBUG_TRACE
-    TRACE(("arg_opts before slurp_args():"));
+    fprintf(stderr, "arg_opts before slurp_args():\n");
     dump_arg_opts();
 #endif
 
