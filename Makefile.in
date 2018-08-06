@@ -9,7 +9,7 @@
 # dbclient functionality, and includes the progress-bar functionality in scp.
 
 ifndef PROGRAMS
-	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert scp
+	PROGRAMS=dropbear dbclient dropbearkey dropbearconvert scp sftp-server
 endif
 
 ifndef MULTI
@@ -64,6 +64,7 @@ COMMONOBJS=dbutil.o buffer.o dbhelpers.o \
 
 ifeq ($(RELFILES), 1)
 COMMONOBJS += argopts.o
+CFLAGS += -DDROPBEAR_RELFILES
 endif
 
 SVROBJS=svr-kex.o svr-auth.o sshpty.o \
@@ -91,6 +92,8 @@ ifeq ($(RELFILES), 1)
 SCPOBJS += argopts.o
 endif
 
+SFTPSERVEROBJS=sftp-server.o strmode.o
+
 ifeq (@DROPBEAR_FUZZ@, 1)
 	allobjs = $(COMMONOBJS) fuzz-common.o  fuzz-wrapfd.o $(CLISVROBJS) $(CLIOBJS) $(SVROBJS) @CRYPTLIB@
 	allobjs:=$(subst svr-main.o, ,$(allobjs))
@@ -109,6 +112,7 @@ else
 	dropbearkeyobjs=$(COMMONOBJS) $(KEYOBJS)
 	dropbearconvertobjs=$(COMMONOBJS) $(CONVERTOBJS)
 	scpobjs=$(SCPOBJS)
+	sftpserverobjs=$(SFTPSERVEROBJS)
 endif
 
 VPATH=@srcdir@
@@ -247,6 +251,14 @@ dropbearkey dropbearconvert: $(HEADERS) $(LIBTOM_DEPS) Makefile
 scp: $(SCPOBJS)  $(HEADERS) Makefile
 	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $(SCPOBJS)
 
+strmode.o: nih-sftp-server/strmode.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+
+sftp-server.o: nih-sftp-server/nih-sftp-server.c $(HEADERS)
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+
+sftp-server: $(SFTPSERVEROBJS) $(HEADERS) Makefile
+	$(CC) $(LDFLAGS) -o $@$(EXEEXT) $(SFTPSERVEROBJS)
 
 # multi-binary compilation.
 MULTIOBJS=
@@ -288,6 +300,7 @@ clean: $(LIBTOM_CLEAN) thisclean
 thisclean:
 	-rm -f dropbear$(EXEEXT) dbclient$(EXEEXT) dropbearkey$(EXEEXT) \
 			dropbearconvert$(EXEEXT) scp$(EXEEXT) scp-progress$(EXEEXT) \
+			sftp-server$(EXEEXT) \
 			dropbearmulti$(EXEEXT) *.o *.da *.bb *.bbg *.prof
 
 distclean: clean tidy

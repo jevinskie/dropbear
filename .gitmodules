@@ -1,0 +1,3 @@
+[submodule "nih-sftp-server"]
+	path = nih-sftp-server
+	url = https://bitbucket.org/jevinskie/nih-sftp-server.git

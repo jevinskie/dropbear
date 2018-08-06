@@ -38,6 +38,8 @@
 #include "runopts.h"
 #include "auth.h"
 
+#include "argopts.h"
+
 /* Handles sessions (either shells or programs) requested by the client */
 
 static int sessioncommand(struct Channel *channel, struct ChanSess *chansess,
@@ -666,7 +668,12 @@ static int sessioncommand(struct Channel *channel, struct ChanSess *chansess,
 #if DROPBEAR_SFTPSERVER
 			if ((cmdlen == 4) && strncmp(chansess->cmd, "sftp", 4) == 0) {
 				m_free(chansess->cmd);
+#if !defined(DROPBEAR_RELFILES)
 				chansess->cmd = m_strdup(SFTPSERVER_PATH);
+#else
+				chansess->cmd = m_malloc(PATH_MAX);
+				snprintf(chansess->cmd, PATH_MAX, "%s/%s", arg_opts.bin_dir, SFTPSERVER_PATH);
+#endif
 			} else 
 #endif
 			{
