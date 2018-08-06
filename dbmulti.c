@@ -32,6 +32,7 @@ int cli_main(int argc, char ** argv);
 int dropbearkey_main(int argc, char ** argv);
 int dropbearconvert_main(int argc, char ** argv);
 int scp_main(int argc, char ** argv);
+int sftp_server_main(int argc, char ** argv);
 
 static int runprog(const char *progname, int argc, char ** argv, int *match) {
 	*match = DROPBEAR_SUCCESS;
@@ -60,6 +61,11 @@ static int runprog(const char *progname, int argc, char ** argv, int *match) {
 #ifdef DBMULTI_scp
 		if (strcmp(progname, "scp") == 0) {
 			return scp_main(argc, argv);
+		}
+#endif
+#ifdef DBMULTI_sftpserver
+		if (strcmp(progname, "sftpserver") == 0 || strcmp(progname, "sftp-server") == 0) {
+			return sftp_server_main(argc, argv);
 		}
 #endif
 	*match = DROPBEAR_FAILURE;

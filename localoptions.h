@@ -13,6 +13,6 @@
 
 #define DROPBEAR_PIDFILE "./" DROPBEAR_PIDFILE_BASE
 
-#define SFTPSERVER_PATH "./sftp-server"
+#define SFTPSERVER_PATH "./sftpserver"
 
 #endif /* DROPBEAR_LOCALOPTIONS_H */

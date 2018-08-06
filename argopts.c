@@ -8,7 +8,7 @@
 
 argopts arg_opts;
 
-#if DEBUG_TRACE
+#if defined(DEBUG_TRACE) && !defined(DBMULTI_sftpserver)
 void dump_arg_opts(void) {
     fprintf(stderr, "\targ_opts->argv0: '%s'\n", arg_opts.argv0);
     fprintf(stderr, "\targ_opts->argv1: '%s'\n", arg_opts.argv1);
@@ -23,7 +23,7 @@ void dump_arg_opts(void) {
 
 void slurp_args(int argc, char **argv) {
 
-#if DEBUG_TRACE
+#if defined(DEBUG_TRACE) && !defined(DBMULTI_sftpserver)
     fprintf(stderr, "arg_opts before slurp_args():\n");
     dump_arg_opts();
 #endif
@@ -44,7 +44,7 @@ void slurp_args(int argc, char **argv) {
         snprintf(arg_opts.ecdsa_priv_host_key_path, sizeof(arg_opts.ecdsa_priv_host_key_path), "%s/%s", arg_opts.bin_dir, ECDSA_PRIV_FILENAME_BASE);
     }
 
-#if DEBUG_TRACE
+#if defined(DEBUG_TRACE) && !defined(DBMULTI_sftpserver)
     fprintf(stderr, "arg_opts before slurp_args():\n");
     dump_arg_opts();
 #endif
