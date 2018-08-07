@@ -200,7 +200,11 @@ group1 in Dropbear server too */
 #define DROPBEAR_SVR_PUBKEY_OPTIONS 1
 
 /* Client authentication options */
+#if HAVE_GETPASS
 #define DROPBEAR_CLI_PASSWORD_AUTH 1
+#else
+#define DROPBEAR_CLI_PASSWORD_AUTH 0
+#endif
 #define DROPBEAR_CLI_PUBKEY_AUTH 1
 
 /* A default argument for dbclient -i <privatekey>. 
@@ -294,6 +298,10 @@ be overridden at runtime with -I. 0 disables idle timeouts */
 #define DEFAULT_IDLE_TIMEOUT 0
 
 /* The default path. This will often get replaced by the shell */
+#ifndef __ANDROID__
 #define DEFAULT_PATH "/usr/bin:/bin"
+#else
+#define DEFAULT_PATH "/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/vendor/bin:/vendor/xbin"
+#endif
 
 #endif /* DROPBEAR_DEFAULT_OPTIONS_H_ */

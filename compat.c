@@ -232,7 +232,11 @@ void setusershell() {
 
 static char **initshells() {
 	/* don't touch this list. */
-	static const char *okshells[] = { "/bin/sh", "/bin/csh", NULL };
+#ifndef __ANDROID__
+	static const char *okshells[] = {"/bin/sh", "/bin/csh", NULL };
+#else
+	static const char *okshells[] = {"/system/bin/sh", NULL };
+#endif
 	register char **sp, *cp;
 	register FILE *fp;
 	struct stat statb;

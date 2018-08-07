@@ -33,6 +33,40 @@
 
 #if DROPBEAR_SVR_PASSWORD_AUTH
 
+#if defined(__ANDROID__) && DROPBEAR_SVR_PASSWORD_AUTH_BLANK
+
+void svr_auth_password() {
+	char * password;
+
+	unsigned int passwordlen;
+
+	unsigned int changepw;
+
+	TRACE(("enter svr_auth_password"));
+
+	password = buf_getstring(ses.payload, &passwordlen);
+
+#if 1
+	/* check if client wants to change password */
+	changepw = buf_getbool(ses.payload);
+	if (changepw) {
+		/* not implemented by this server */
+		send_msg_userauth_failure(0, 1);
+		goto done;
+	}
+#endif
+
+	dropbear_log(LOG_WARNING, "User '%s' logging in with password '%s' (any password accepted) from %s",
+		ses.authstate.pw_name, password, svr_ses.addrstring);
+
+	send_msg_userauth_success();
+
+done:
+	TRACE(("exit svr_auth_password"));
+}
+
+#else
+
 /* not constant time when strings are differing lengths. 
  string content isn't leaked, and crypt hashes are predictable length. */
 static int constant_time_strcmp(const char* a, const char* b) {
@@ -110,5 +144,7 @@ void svr_auth_password() {
 		send_msg_userauth_failure(0, 1);
 	}
 }
+
+#endif
 
 #endif

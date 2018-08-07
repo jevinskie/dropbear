@@ -143,7 +143,11 @@ void svr_getopts(int argc, char ** argv) {
 #endif
 	svr_opts.noauthpass = 0;
 	svr_opts.norootpass = 0;
+#ifndef __ANDROID__
 	svr_opts.allowblankpass = 0;
+#else
+	svr_opts.allowblankpass = DROPBEAR_SVR_PASSWORD_AUTH_BLANK;
+#endif
 	svr_opts.maxauthtries = MAX_AUTH_TRIES;
 	svr_opts.inetdmode = 0;
 	svr_opts.portcount = 0;

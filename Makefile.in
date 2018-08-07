@@ -94,6 +94,14 @@ endif
 
 SFTPSERVEROBJS=sftpserver.o strmode.o
 
+ifeq (@NEED_ANDROID_OPENPTY_COMPAT@, 1)
+	SVROBJS += android-compat.o
+endif
+
+ifeq (@NEED_ANDROID_TTYNAME_COMPAT@, 1)
+	SVROBJS += android-compat.o
+endif
+
 ifeq (@DROPBEAR_FUZZ@, 1)
 	allobjs = $(COMMONOBJS) fuzz-common.o  fuzz-wrapfd.o $(CLISVROBJS) $(CLIOBJS) $(SVROBJS) @CRYPTLIB@
 	allobjs:=$(subst svr-main.o, ,$(allobjs))

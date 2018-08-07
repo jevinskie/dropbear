@@ -127,6 +127,12 @@ fi
 # large file support is useful for scp
 AC_SYS_LARGEFILE
 
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+#ifndef __ANDROID__
+# error macro not defined
+#endif
+]])], [is_android="yes"], [is_android="no"])
+
 # Host specific options
 # this isn't a definitive list of hosts, they are just added as required
 AC_CANONICAL_HOST
@@ -285,6 +291,32 @@ AC_ARG_ENABLE(openpty,
 		AC_SEARCH_LIBS(openpty, util, [dropbear_cv_func_have_openpty=yes])
 	]
 )
+
+if test "$is_android" = "yes" && test "$dropbear_cv_func_have_openpty" != "yes"; then
+	dropbear_cv_func_have_openpty=yes
+	AC_DEFINE(NEED_ANDROID_OPENPTY_COMPAT, 1, Needs android compat openpty() function)
+	NEED_ANDROID_OPENPTY_COMPAT=1
+else
+	AC_DEFINE(NEED_ANDROID_OPENPTY_COMPAT, 0, Needs android compat openpty() function)
+	NEED_ANDROID_OPENPTY_COMPAT=0
+fi
+
+AC_SUBST(NEED_ANDROID_OPENPTY_COMPAT)
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+#if defined(__ANDROID__) && __ANDROID_API__ < __ANDROID_API_L__
+# error need ttyname compat
+#endif
+]])], [need_android_ttyname_compat="yes"], [need_android_ttyname_compat="no"])
+
+if test "$need_android_ttyname_compat" = "yes"; then
+	AC_DEFINE(NEED_ANDROID_TTYNAME_COMPAT, 1, Needs android compat ttyname() function)
+else
+	AC_DEFINE(NEED_ANDROID_TTYNAME_COMPAT, 0, Needs android compat ttyname() function)
+fi
+
+AC_SUBST(NEED_ANDROID_TTYNAME_COMPAT)
+
 
 if test "x$dropbear_cv_func_have_openpty" = "xyes"; then
 	AC_DEFINE(HAVE_OPENPTY,,Have openpty() function)
@@ -849,7 +881,7 @@ AC_MSG_NOTICE()
 AC_MSG_NOTICE([getpass() not available, dbclient will only have public-key authentication])
 fi
 
-if test "t$found_crypt_func" != there; then
+if test "$is_android" != yes && test "t$found_crypt_func" != there; then
 AC_MSG_NOTICE()
 AC_MSG_NOTICE([crypt() not available, dropbear server will not have password authentication])
 fi

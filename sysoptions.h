@@ -78,6 +78,11 @@
 /* success/failure defines */
 #define DROPBEAR_SUCCESS 0
 #define DROPBEAR_FAILURE -1
+
+#ifdef __ANDROID__
+#define DROPBEAR_SVR_PASSWORD_AUTH 1
+#define DROPBEAR_SVR_PASSWORD_AUTH_BLANK 1
+#endif
  
 #define DROPBEAR_PASSWORD_ENV "DROPBEAR_PASSWORD"
 
@@ -233,7 +238,7 @@ If you test it please contact the Dropbear author */
 #error "DROPBEAR_SVR_PATM_AUTH requires PAM headers. Perhaps ./configure --enable-pam ?"
 #endif
 
-#if DROPBEAR_SVR_PASSWORD_AUTH && !HAVE_CRYPT
+#if DROPBEAR_SVR_PASSWORD_AUTH && !HAVE_CRYPT && !DROPBEAR_SVR_PASSWORD_AUTH_BLANK
 	#error "DROPBEAR_SVR_PASSWORD_AUTH requires `crypt()'."
 #endif
 
