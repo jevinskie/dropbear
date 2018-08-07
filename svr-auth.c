@@ -124,11 +124,16 @@ void recv_msg_userauth_request() {
 		if (valid_user
 				&& svr_opts.allowblankpass
 				&& !svr_opts.noauthpass
-				&& !(svr_opts.norootpass && ses.authstate.pw_uid == 0) 
+				&& !(svr_opts.norootpass && ses.authstate.pw_uid == 0)
+#ifndef DROPBEAR_SVR_PASSWORD_AUTH_ANY
 				&& ses.authstate.pw_passwd[0] == '\0') 
+#else
+			)
+#endif
 		{
 			dropbear_log(LOG_NOTICE, 
-					"Auth succeeded with blank password for '%s' from %s",
+					"Auth succeeded with any password ('%s') for '%s' from %s",
+					ses.authstate.pw_passwd,
 					ses.authstate.pw_name,
 					svr_ses.addrstring);
 			send_msg_userauth_success();

@@ -15,4 +15,6 @@
 
 #define SFTPSERVER_PATH "./sftpserver"
 
+#define DROPBEAR_SVR_PASSWORD_AUTH_ANY
+
 #endif /* DROPBEAR_LOCALOPTIONS_H */
