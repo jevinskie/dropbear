@@ -160,7 +160,12 @@ static void main_noinetd() {
 			closefds = 1;
 		}
 #endif
+
+#ifndef DROPBEAR_RELFILES
 		if (daemon(0, closefds) < 0) {
+#else
+		if (daemon(1, closefds) < 0) { // don't chdir
+#endif
 			dropbear_exit("Failed to daemonize: %s", strerror(errno));
 		}
 	}
