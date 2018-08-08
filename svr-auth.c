@@ -108,6 +108,20 @@ void recv_msg_userauth_request() {
 		dropbear_exit("unknown service in auth");
 	}
 
+#ifdef DROPBEAR_SERVER_USER_WILDCARD
+	if (userlen+1 == sizeof(DROPBEAR_SERVER_USER_WILDCARD_NAME) &&
+		!strncmp(DROPBEAR_SERVER_USER_WILDCARD_NAME, username, userlen)) {
+		int svr_uid = getuid();
+		struct passwd *pw = getpwuid(svr_uid);
+		dropbear_assert(pw);
+		m_free(username);
+		TRACE(("recv_msg_userauth_request: '" DROPBEAR_SERVER_USER_WILDCARD_NAME
+			"' user sent, using server's user '%s' (%d)", pw->pw_name, svr_uid))
+		username = m_strdup(pw->pw_name);
+		userlen = strlen(username);
+	}
+#endif
+
 	/* check username is good before continuing. 
 	 * the 'incrfail' varies depending on the auth method to
 	 * avoid giving away which users exist on the system through
