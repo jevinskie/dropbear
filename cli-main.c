@@ -34,6 +34,11 @@
 
 #include "argopts.h"
 
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+#include <android/log.h>
+#define LOGCAT_TAG "dropbear-cli"
+#endif
+
 static void cli_dropbear_exit(int exitcode, const char* format, va_list param) ATTRIB_NORETURN;
 static void cli_dropbear_log(int priority, const char* format, va_list param);
 
@@ -145,6 +150,10 @@ static void cli_dropbear_log(int priority,
 
 	fprintf(stderr, "%s: %s\n", cli_opts.progname, printbuf);
 	fflush(stderr);
+
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+	__android_log_print(ANDROID_LOG_INFO, LOGCAT_TAG, "%s: %s", cli_opts.progname, printbuf);
+#endif
 }
 
 static void exec_proxy_cmd(const void *user_data_cmd) {

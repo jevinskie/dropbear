@@ -42,6 +42,11 @@
 #include "crypto_desc.h"
 #include "fuzz.h"
 
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+#include <android/log.h>
+#define LOGCAT_TAG "dropbear-srv"
+#endif
+
 static void svr_remoteclosed(void);
 static void svr_algos_initialise(void);
 
@@ -240,6 +245,9 @@ void svr_dropbear_log(int priority, const char* format, va_list param) {
 			snprintf(datestr, sizeof(datestr), "%d", (int)timesec);
 		}
 		fprintf(stderr, "[%d] %s %s\n", getpid(), datestr, printbuf);
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+		__android_log_print(ANDROID_LOG_INFO, LOGCAT_TAG, "[%d] %s %s\n", getpid(), datestr, printbuf);
+#endif
 	}
 }
 

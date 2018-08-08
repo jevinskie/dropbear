@@ -67,6 +67,11 @@
 #include "session.h"
 #include "atomicio.h"
 
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+#include <android/log.h>
+#define LOGCAT_TAG "dropbear"
+#endif
+
 #define MAX_FMT 100
 
 static void generic_dropbear_exit(int exitcode, const char* format, 
@@ -143,6 +148,10 @@ static void generic_dropbear_log(int UNUSED(priority), const char* format,
 
 	fprintf(stderr, "%s\n", printbuf);
 
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+	__android_log_write(ANDROID_LOG_INFO, LOGCAT_TAG, printbuf);
+#endif
+
 }
 
 /* this is what can be called to write arbitrary log messages */
@@ -197,12 +206,22 @@ void dropbear_trace(const char* format, ...) {
 	fprintf(stderr, "TRACE  (%d) %f: ", getpid(), time_since_start());
 	vfprintf(stderr, format, param);
 	fprintf(stderr, "\n");
+
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+	char printbuf[4096];
+	printbuf[0] = '\0';
+	int prefix_sz = snprintf(printbuf, sizeof(printbuf), "TRACE  (%d) %f: ", getpid(), time_since_start());
+	vsnprintf(printbuf + prefix_sz, sizeof(printbuf) - prefix_sz, format, param);
+	__android_log_write(ANDROID_LOG_DEBUG, LOGCAT_TAG, printbuf);
+#endif
+
 	va_end(param);
 }
 
 void dropbear_trace2(const char* format, ...) {
-	static int trace_env = -1;
 	va_list param;
+#ifndef DEBUG_TRACE2_FORCE
+	static int trace_env = -1;
 
 	if (trace_env == -1) {
 		trace_env = getenv("DROPBEAR_TRACE2") ? 1 : 0;
@@ -211,11 +230,25 @@ void dropbear_trace2(const char* format, ...) {
 	if (!(debug_trace && trace_env)) {
 		return;
 	}
+#else
+	if (!(debug_trace)) {
+		return;
+	}
+#endif
 
 	va_start(param, format);
 	fprintf(stderr, "TRACE2 (%d) %f: ", getpid(), time_since_start());
 	vfprintf(stderr, format, param);
 	fprintf(stderr, "\n");
+
+#if defined(__ANDROID__) && defined(DROPBEAR_LOGCAT)
+	char printbuf[4096];
+	printbuf[0] = '\0';
+	int prefix_sz = snprintf(printbuf, sizeof(printbuf), "TRACE2  (%d) %f: ", getpid(), time_since_start());
+	vsnprintf(printbuf + prefix_sz, sizeof(printbuf) - prefix_sz, format, param);
+	__android_log_write(ANDROID_LOG_VERBOSE, LOGCAT_TAG, printbuf);
+#endif
+
 	va_end(param);
 }
 #endif /* DEBUG_TRACE */

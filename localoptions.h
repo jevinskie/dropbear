@@ -5,6 +5,8 @@
 
 #define DEBUG_TRACE 1
 
+#define DEBUG_TRACE2_FORCE
+
 #define LOG_COMMANDS 1
 
 #define DSS_PRIV_FILENAME "./" DSS_PRIV_FILENAME_BASE
@@ -16,5 +18,7 @@
 #define SFTPSERVER_PATH "./sftpserver"
 
 #define DROPBEAR_SVR_PASSWORD_AUTH_ANY
+
+#define DROPBEAR_LOGCAT
 
 #endif /* DROPBEAR_LOCALOPTIONS_H */
