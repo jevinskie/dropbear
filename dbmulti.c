@@ -38,33 +38,40 @@ static int runprog(const char *progname, int argc, char ** argv, int *match) {
 	*match = DROPBEAR_SUCCESS;
 
 #ifdef DBMULTI_dropbear
-		if (strcmp(progname, "dropbear") == 0) {
+		if (strcmp(progname, "dropbear") == 0
+				|| strcmp(progname, DROPBEAR_PATH_BASE) == 0) {
 			return dropbear_main(argc, argv);
 		}
 #endif
 #ifdef DBMULTI_dbclient
 		if (strcmp(progname, "dbclient") == 0
-				|| strcmp(progname, "ssh") == 0) {
+				|| strcmp(progname, "ssh") == 0
+				|| strcmp(progname, DROPBEAR_PATH_SSH_PROGRAM_BASE) == 0) {
 			return cli_main(argc, argv);
 		}
 #endif
 #ifdef DBMULTI_dropbearkey
-		if (strcmp(progname, "dropbearkey") == 0) {
+		if (strcmp(progname, "dropbearkey") == 0
+				|| strcmp(progname, DROPBEARKEY_PATH_BASE) == 0) {
 			return dropbearkey_main(argc, argv);
 		}
 #endif
 #ifdef DBMULTI_dropbearconvert
-		if (strcmp(progname, "dropbearconvert") == 0) {
+		if (strcmp(progname, "dropbearconvert") == 0
+				|| strcmp(progname, DROPBEARCONVERT_PATH_BASE) == 0) {
 			return dropbearconvert_main(argc, argv);
 		}
 #endif
 #ifdef DBMULTI_scp
-		if (strcmp(progname, "scp") == 0) {
+		if (strcmp(progname, "scp") == 0
+				|| strcmp(progname, SCP_PATH_BASE) == 0) {
 			return scp_main(argc, argv);
 		}
 #endif
 #ifdef DBMULTI_sftpserver
-		if (strcmp(progname, "sftpserver") == 0 || strcmp(progname, "sftp-server") == 0) {
+		if (strcmp(progname, "sftpserver") == 0
+				|| strcmp(progname, "sftp-server") == 0
+				|| strcmp(progname, SFTPSERVER_PATH_BASE) == 0) {
 			return sftp_server_main(argc, argv);
 		}
 #endif
@@ -76,6 +83,40 @@ int main(int argc, char ** argv) {
 	int i;
 
 	slurp_args(argc, argv);
+
+#ifdef DROPBEAR_RELFILES
+	char symlink_dest[PATH_MAX];
+#ifdef DBMULTI_dropbear
+	snprintf(symlink_dest, sizeof(symlink_dest), "%s/%s", arg_opts.bin_dir, DROPBEAR_PATH_BASE);
+	unlink(symlink_dest);
+	symlink(arg_opts.bin_path, symlink_dest);
+#endif
+#ifdef DBMULTI_dbclient
+	snprintf(symlink_dest, sizeof(symlink_dest), "%s/%s", arg_opts.bin_dir, DROPBEAR_PATH_SSH_PROGRAM_BASE);
+	unlink(symlink_dest);
+	symlink(arg_opts.bin_path, symlink_dest);
+#endif
+#ifdef DBMULTI_dropbearkey
+	snprintf(symlink_dest, sizeof(symlink_dest), "%s/%s", arg_opts.bin_dir, DROPBEARKEY_PATH_BASE);
+	unlink(symlink_dest);
+	symlink(arg_opts.bin_path, symlink_dest);
+#endif
+#ifdef DBMULTI_dropbearconvert
+	snprintf(symlink_dest, sizeof(symlink_dest), "%s/%s", arg_opts.bin_dir, DROPBEARCONVERT_PATH_BASE);
+	unlink(symlink_dest);
+	symlink(arg_opts.bin_path, symlink_dest);
+#endif
+#ifdef DBMULTI_scp
+	snprintf(symlink_dest, sizeof(symlink_dest), "%s/%s", arg_opts.bin_dir, SCP_PATH_BASE);
+	unlink(symlink_dest);
+	symlink(arg_opts.bin_path, symlink_dest);
+#endif
+#ifdef DBMULTI_sftpserver
+	snprintf(symlink_dest, sizeof(symlink_dest), "%s/%s", arg_opts.bin_dir, SFTPSERVER_PATH_BASE);
+	unlink(symlink_dest);
+	symlink(arg_opts.bin_path, symlink_dest);
+#endif
+#endif
 
 	for (i = 0; i < 2; i++) {
 		/* Try symlink first, then try as an argument eg "dropbearmulti dbclient host ..." */
@@ -107,6 +148,9 @@ int main(int argc, char ** argv) {
 #endif
 #ifdef DBMULTI_scp
 			"'scp' - secure copy\n"
+#endif
+#ifdef DBMULTI_sftpserver
+			"'sftp-sever' - secure copy\n"
 #endif
 			,
 			DROPBEAR_VERSION);

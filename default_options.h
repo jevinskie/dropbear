@@ -258,11 +258,18 @@ Homedir is prepended unless path begins with / */
  * OpenSSH), set the path below and set DROPBEAR_SFTPSERVER. 
  * The sftp-server program is not provided by Dropbear itself */
 #define DROPBEAR_SFTPSERVER 1
-#define SFTPSERVER_PATH "/usr/libexec/sftp-server"
+#define SFTPSERVER_PATH_BASE "sftp-server"
+#define SFTPSERVER_PATH "/usr/libexec/" SFTPSERVER_PATH_BASE
 
 /* This is used by the scp binary when used as a client binary. If you're
  * not using the Dropbear client, you'll need to change it */
-#define DROPBEAR_PATH_SSH_PROGRAM "/usr/bin/dbclient"
+#define DROPBEAR_PATH_SSH_PROGRAM_BASE "dbclient"
+#define DROPBEAR_PATH_SSH_PROGRAM "/usr/bin/" DROPBEAR_PATH_SSH_PROGRAM_BASE
+
+#define DROPBEAR_PATH_BASE "dropbear"
+#define DROPBEARCONVERT_PATH_BASE "dropbearconvert"
+#define DROPBEARKEY_PATH_BASE "dropbearkey"
+#define SCP_PATH_BASE "scp"
 
 /* Whether to log commands executed by a client. This only logs the 
  * (single) command sent to the server, not what a user did in a 

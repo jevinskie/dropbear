@@ -14,6 +14,7 @@ void dump_arg_opts(void) {
     fprintf(stderr, "\targ_opts->argv1: '%s'\n", arg_opts.argv1);
     fprintf(stderr, "\targ_opts->bin_path: '%s'\n", arg_opts.bin_path);
     fprintf(stderr, "\targ_opts->bin_dir: '%s'\n", arg_opts.bin_dir);
+    fprintf(stderr, "\targ_opts->bin_name: '%s'\n", arg_opts.bin_name);
     fprintf(stderr, "\targ_opts->pid_path: '%s'\n", arg_opts.pid_path);
     fprintf(stderr, "\targ_opts->dss_priv_host_key_path: '%s'\n", arg_opts.dss_priv_host_key_path);
     fprintf(stderr, "\targ_opts->rsa_priv_host_key_path: '%s'\n", arg_opts.rsa_priv_host_key_path);
@@ -38,6 +39,7 @@ void slurp_args(int argc, char **argv) {
         char *bin_dir_last_slash = strrchr(arg_opts.bin_dir, '/');
         assert(bin_dir_last_slash != &arg_opts.bin_dir[0]);
         *bin_dir_last_slash = '\0';
+        strncpy(arg_opts.bin_name, bin_dir_last_slash + 1, sizeof(arg_opts.bin_name));
         snprintf(arg_opts.pid_path, sizeof(arg_opts.pid_path), "%s/%s", arg_opts.bin_dir, DROPBEAR_PIDFILE_BASE);
         snprintf(arg_opts.dss_priv_host_key_path, sizeof(arg_opts.dss_priv_host_key_path), "%s/%s", arg_opts.bin_dir, DSS_PRIV_FILENAME_BASE);
         snprintf(arg_opts.rsa_priv_host_key_path, sizeof(arg_opts.rsa_priv_host_key_path), "%s/%s", arg_opts.bin_dir, RSA_PRIV_FILENAME_BASE);

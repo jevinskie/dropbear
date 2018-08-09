@@ -675,7 +675,7 @@ static int sessioncommand(struct Channel *channel, struct ChanSess *chansess,
 #if !defined(DBMULTI_sftpserver)
 				snprintf(chansess->cmd, PATH_MAX, "%s/%s", arg_opts.bin_dir, SFTPSERVER_PATH);
 #else
-				snprintf(chansess->cmd, PATH_MAX, "%s/%s %s", arg_opts.bin_dir, "dropbearmulti", "sftpserver");
+				snprintf(chansess->cmd, PATH_MAX, "%s " SFTPSERVER_PATH_BASE, arg_opts.bin_path);
 #endif
 #endif
 			} else 

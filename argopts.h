@@ -8,6 +8,7 @@ typedef struct argopts {
 	char argv1[PATH_MAX];
 	char bin_path[PATH_MAX];
 	char bin_dir[PATH_MAX];
+	char bin_name[PATH_MAX];
 	char pid_path[PATH_MAX];
 	char dss_priv_host_key_path[PATH_MAX];
 	char rsa_priv_host_key_path[PATH_MAX];
