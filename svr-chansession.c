@@ -690,7 +690,9 @@ static int sessioncommand(struct Channel *channel, struct ChanSess *chansess,
 
 	/* take global command into account */
 	if (svr_opts.forced_command) {
+#if DROPBEAR_SVR_PUBKEY_OPTIONS_BUILT
 		chansess->original_command = chansess->cmd ? : m_strdup("");
+#endif
 		chansess->cmd = m_strdup(svr_opts.forced_command);
 	} else {
 		/* take public key option 'command' into account */
