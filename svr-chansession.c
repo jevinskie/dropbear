@@ -668,15 +668,11 @@ static int sessioncommand(struct Channel *channel, struct ChanSess *chansess,
 #if DROPBEAR_SFTPSERVER
 			if ((cmdlen == 4) && strncmp(chansess->cmd, "sftp", 4) == 0) {
 				m_free(chansess->cmd);
-#if !defined(DROPBEAR_RELFILES)
+#ifndef DROPBEAR_RELFILES
 				chansess->cmd = m_strdup(SFTPSERVER_PATH);
 #else
-				chansess->cmd = m_malloc(PATH_MAX);
-#if !defined(DBMULTI_sftpserver)
-				snprintf(chansess->cmd, PATH_MAX, "%s/%s", arg_opts.bin_dir, SFTPSERVER_PATH);
-#else
-				snprintf(chansess->cmd, PATH_MAX, "%s " SFTPSERVER_PATH_BASE, arg_opts.bin_path);
-#endif
+				chansess->cmd = m_malloc(MAX_CMD_LEN);
+				snprintf(chansess->cmd, MAX_CMD_LEN, "%s/%s", arg_opts.bin_dir, SFTPSERVER_PATH_BASE);
 #endif
 			} else 
 #endif
@@ -699,6 +695,18 @@ static int sessioncommand(struct Channel *channel, struct ChanSess *chansess,
 		svr_pubkey_set_forced_command(chansess);
 	}
 
+#ifdef DROPBEAR_RELFILES
+	if (chansess->cmd && !strncmp(chansess->cmd, "scp ", strlen("scp "))) {
+		char *orig_scp_args = m_strdup(chansess->cmd + strlen("scp "));
+		TRACE(("relfile scp original cmd '%s'", chansess->cmd))
+		TRACE(("relfile scp original cmd args '%s'", orig_scp_args))
+		m_free(chansess->cmd);
+		chansess->cmd = m_malloc(MAX_CMD_LEN);
+		snprintf(chansess->cmd, MAX_CMD_LEN, "%s/%s %s", arg_opts.bin_dir, SCP_PATH_BASE, orig_scp_args);
+		m_free(orig_scp_args);
+		TRACE(("relfile scp new cmd '%s'", chansess->cmd))
+	}
+#endif
 
 #if LOG_COMMANDS
 	if (chansess->cmd) {

@@ -1,18 +1,18 @@
 #ifndef DROPBEAR_ARGOPTS_H_
 #define DROPBEAR_ARGOPTS_H_
 
-#include <limits.h>
+#include "options.h"
 
 typedef struct argopts {
-	char argv0[PATH_MAX];
-	char argv1[PATH_MAX];
-	char bin_path[PATH_MAX];
-	char bin_dir[PATH_MAX];
-	char bin_name[PATH_MAX];
-	char pid_path[PATH_MAX];
-	char dss_priv_host_key_path[PATH_MAX];
-	char rsa_priv_host_key_path[PATH_MAX];
-	char ecdsa_priv_host_key_path[PATH_MAX];
+	char argv0[MAX_CMD_LEN];
+	char argv1[MAX_CMD_LEN];
+	char bin_path[MAX_CMD_LEN];
+	char bin_dir[MAX_CMD_LEN];
+	char bin_name[MAX_CMD_LEN];
+	char pid_path[MAX_CMD_LEN];
+	char dss_priv_host_key_path[MAX_CMD_LEN];
+	char rsa_priv_host_key_path[MAX_CMD_LEN];
+	char ecdsa_priv_host_key_path[MAX_CMD_LEN];
 } argopts;
 
 extern argopts arg_opts;

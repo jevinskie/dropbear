@@ -85,7 +85,7 @@ int main(int argc, char ** argv) {
 	slurp_args(argc, argv);
 
 #ifdef DROPBEAR_RELFILES
-	char symlink_dest[PATH_MAX];
+	char symlink_dest[MAX_CMD_LEN];
 #ifdef DBMULTI_dropbear
 	snprintf(symlink_dest, sizeof(symlink_dest), "%s/%s", arg_opts.bin_dir, DROPBEAR_PATH_BASE);
 	unlink(symlink_dest);
