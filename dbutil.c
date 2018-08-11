@@ -402,9 +402,21 @@ void run_shell_command(const char* cmd, unsigned int maxfd, char* usershell) {
 		dropbear_exit("signal() error");
 	}
 
+#ifdef __ANDROID__
+	char *prop_env = getenv("ANDROID_PROPERTY_WORKSPACE");
+	int prop_fd = 0;
+	if (prop_env) {
+		prop_fd = atoi(prop_env);
+	}
+#endif
+
 	/* close file descriptors except stdin/stdout/stderr
 	 * Need to be sure FDs are closed here to avoid reading files as root */
 	for (i = 3; i <= maxfd; i++) {
+#ifdef __ANDROID__
+		if (i == prop_fd)
+			continue;
+#endif
 		m_close(i);
 	}
 

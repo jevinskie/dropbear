@@ -939,6 +939,7 @@ static void execchild(const void *user_data) {
 	seedrandom();
 #endif
 
+#ifndef DROPBEAR_SVR_DONT_CLEAR_ENV
 	/* clear environment */
 	/* if we're debugging using valgrind etc, we need to keep the LD_PRELOAD
 	 * etc. This is hazardous, so should only be used for debugging. */
@@ -952,6 +953,7 @@ static void execchild(const void *user_data) {
 	}
 #endif /* HAVE_CLEARENV */
 #endif /* DEBUG_VALGRIND */
+#endif /* DROPBEAR_SVR_DONT_CLEAR_ENV */
 
 	/* We can only change uid/gid as root ... */
 	if (getuid() == 0) {
