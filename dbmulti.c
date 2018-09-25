@@ -82,7 +82,9 @@ static int runprog(const char *progname, int argc, char ** argv, int *match) {
 int main(int argc, char ** argv) {
 	int i;
 
+#ifdef DROPBEAR_RELFILES
 	slurp_args(argc, argv);
+#endif
 
 #ifdef DROPBEAR_RELFILES
 	char symlink_dest[MAX_CMD_LEN];

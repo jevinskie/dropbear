@@ -1,11 +1,11 @@
 #ifndef DROPBEAR_LOCALOPTIONS_H
 #define DROPBEAR_LOCALOPTIONS_H
 
-#define DROPBEAR_DEFPORT "2222"
+// #define DROPBEAR_DEFPORT "1111"
 
-#define DEBUG_TRACE 1
+// #define DEBUG_TRACE 1
 
-#define DEBUG_TRACE2_FORCE
+// #define DEBUG_TRACE2_FORCE
 
 #define LOG_COMMANDS 1
 
@@ -19,6 +19,8 @@
 
 #define SFTPSERVER_PATH "/usr/local/libexec/" SFTPSERVER_PATH_BASE
 
+#define DEFAULT_PATH "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 // #define DROPBEAR_SVR_PASSWORD_AUTH_ANY
 
 // #define DROPBEAR_LOGCAT
@@ -28,6 +30,6 @@
 
 #define DROPBEAR_SVR_PUBKEY_AUTH 1
 
-#define DROPBEAR_SVR_DONT_CLEAR_ENV
+// #define DROPBEAR_SVR_DONT_CLEAR_ENV
 
 #endif /* DROPBEAR_LOCALOPTIONS_H */

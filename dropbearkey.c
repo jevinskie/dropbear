@@ -144,7 +144,9 @@ int main(int argc, char ** argv) {
 	unsigned int bits = 0, genbits;
 	int printpub = 0;
 
+#ifdef DROPBEAR_RELFILES
 	slurp_args(argc, argv);
+#endif
 
 	crypto_init();
 	seedrandom();

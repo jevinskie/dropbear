@@ -62,7 +62,9 @@ int main(int argc, char ** argv) {
 
 	disallow_core();
 
+#ifdef DROPBEAR_RELFILES
 	slurp_args(argc, argv);
+#endif
 
 	seedrandom();
 	crypto_init();

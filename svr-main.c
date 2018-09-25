@@ -57,7 +57,9 @@ int main(int argc, char ** argv)
 
 	disallow_core();
 
+#ifdef DROPBEAR_RELFILES
 	slurp_args(argc, argv);
+#endif
 
 	/* get commandline options */
 	svr_getopts(argc, argv);

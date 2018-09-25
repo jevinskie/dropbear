@@ -65,7 +65,9 @@ int main(int argc, char ** argv) {
 	const char* infile;
 	const char* outfile;
 
+#ifdef DROPBEAR_RELFILES
 	slurp_args(argc, argv);
+#endif
 
 	crypto_init();
 	seedrandom();

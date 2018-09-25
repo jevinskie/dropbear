@@ -1,9 +1,9 @@
-Package: com.yourcompany.examplepkg
-Name: examplepkg
+Package: com.jevinskie.dropbearmulti-arm64
+Name: dropbearmulti arm64
 Depends: 
-Version: 0.0.1
+Version: 2018.76
 Architecture: iphoneos-arm
-Description: An awesome tool of some sort!!
+Description: Dropbear compiled as a single binary with built-in scp and sftp-server
 Maintainer: Jevin Sweval
 Author: Jevin Sweval
 Section: System

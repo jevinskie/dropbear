@@ -320,7 +320,9 @@ main(int argc, char **argv)
 	extern char *optarg;
 	extern int optind;
 
+#ifdef DROPBEAR_RELFILES
 	slurp_args(argc, argv);
+#endif
 
 	/* Ensure that fds 0, 1 and 2 are open or directed to /dev/null */
 	sanitise_stdfd();
