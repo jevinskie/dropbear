@@ -232,9 +232,14 @@ void setusershell() {
 
 static char **initshells() {
 	/* don't touch this list. */
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) || (__APPLE__ && TARGET_OS_IPHONE)
+	// stock
 	static const char *okshells[] = {"/bin/sh", "/bin/csh", NULL };
+#elif __APPLE__ && TARGET_OS_IPHONE
+	// iOS
+	static const char *okshells[] = {"/bin/sh", "/bin/bash", NULL };
 #else
+	// Android
 	static const char *okshells[] = {"/system/bin/sh", NULL };
 #endif
 	register char **sp, *cp;

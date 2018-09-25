@@ -182,4 +182,8 @@ typedef u_int32_t uint32_t;
 # define UNUSED(x) x 
 #endif
 
+#if __APPLE__
+#include "TargetConditionals.h"
+#endif
+
 #endif /* DROPBEAR_INCLUDES_H_ */
